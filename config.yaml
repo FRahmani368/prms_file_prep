@@ -1,0 +1,81 @@
+##### This is an example .yaml file for how you should make your config file
+##### See below for what you need to have
+##### Make sure the paths are correct. They are individual to your machine
+params:
+  smidx_exp: 0.3
+  soil_moist_init_frac: 0
+  sro_to_dprst_imperv: 0.2
+  ssstor_init_frac: 0.0
+  melt_force: 140
+  carea_max: 0.6
+  pref_flow_den: 0   # fraction of the soil zone in which preferential flow occurs for each HRU
+path:
+  attr: "/home/fzr5082/TCANresults/CAMELS671_dp/CAMELSattr671_tot.feather"
+  data: "/home/fzr5082/pkdan_data_structures/data/{}-{}.json"
+  node:
+    shortened: "/home/tkb5476/Projects/pkdn/data/shortened_data/node.csv"
+    full: "/home/tkb5476/Projects/pkdn /data/srb/interpolated_data/graphs/node_cut_end.csv"
+    dx2000: "/home/tkb5476/Projects/pkdn/data/dx-2000dis/graphs/node.csv"
+  edge:
+    shortened: "/home/tkb5476/Projects/pkdn/data/shortened_data/edge.csv"
+    full: "/home/tkb5476/Projects/pkdn/data/srb/interpolated_data/graphs/edge.csv"
+    dx2000: "/home/tkb5476/Projects/pkdn/data/dx-2000dis/graphs/edge.csv"
+  inflow:
+    interpolated:
+      dx2000: "/home/tkb5476/Projects/pkdn/data/dx-2000dis/inflow_interpolated/"
+      json_file: "/home/fzr5082/pkdan_data_structures/data/inflow-interpolated-dict_{}_{}_{}.json"
+    non_interpolated:
+      dx2000: "/home/tkb5476/Projects/pkdn/data/dx-2000dis/inflow_non_interpolated/"
+      json_file: "/home/fzr5082/pkdan_data_structures/data/inflow-non-interpolated-dict_{}_{}_{}.json"
+  intersection:
+    json_file: "/home/fzr5082/pkdan_data_structures/data/intersection-dict.json"
+  transition_matrix: "/home/tkb5476/Projects/pkdn/data/dx-2000dis/graphs/TM.csv"
+  huc10:
+    interpolated:
+      data: "/home/tkb5476/Projects/pkdn/data/dx-2000dis/graphs/SRB_HUC10_interpolated.csv"
+      shortened_csv: "/home/fzr5082/pkdan_data_structures/data/huc-10_interpolated_{}_{}.csv"
+    non_interpolated:
+      data: "/home/tkb5476/Projects/pkdn/data/dx-2000dis/graphs/SRB_HUC10_All_new_NLDAS2_forcingByBasin_for_SRB.csv"
+      shortened_csv: "/home/fzr5082/pkdan_data_structures/data/huc-10_non_interpolated_{}_{}.csv"
+  plots: "/home/fzr5082/pkdan_data_structures/plots/{}.png"
+is_cuda: False
+regex:
+  code_regex: "-r.*-"
+time:
+  start_interval: "2004-10-01T00:00:00"
+  end_interval: "2005-09-30T23:00:00"
+  date_codes: "/home/tkb5476/Projects/pkdn/data/dx-2000dis/date_codes.json"
+  interpolated:
+    date_format: "%Y-%m-%dT%H:%M:%S"
+  non_interpolated:
+    date_format: "%Y%m%d"
+    huc_10_format: "%D"
+scaling:
+  # n p q x
+  range: [[0.01, 0.15], [1, 50], [1, 5], [0.01, 0.35]]
+jobs:
+  basins: [246, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650]
+  param_df_name: "/home/fzr5082/pkdan_data_structures/runs/{}__{}_job_{}_data.csv"
+  param_df_columns: ["Epoch", "Loss", "n", "p", "q", "x"]
+  writer_file: "/home/fzr5082/pkdan_data_structures/runs/{}__{}_job_{}_writer"
+  hydrograph_df_name: "/home/fzr5082/pkdan_data_structures/runs/{}__{}_job_{}_hydrograph_data.csv"
+  hydrograph_df_columns: ["time_interval", "y_hat", "y_t"]
+#  noise_mask: [True, True, True, True]
+  noise_deviation: [0.5, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+#  noise_mean: [0, 0, 0, 0]
+#  input_mask: [[True, False, True, False], [True, False, False, False], [True, False, False, False], [True, False, False, False], [True, False, False, False], [True, False, False, False], [True, False, False, False], [True, False, False, False], [True, False, False, False], [True, False, False, False], [True, False, False, False]]
+  epochs: [7, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+  hydropgraph_plot_name: "{}__{}_job_{}_hydrograph"
+  loss_plot_name: "{}__{}_job_{}_loss"
+  model_name: "/home/fzr5082/pkdan_data_structures/torch_models/{}__{}_job_{}_model.tar"
+  number: 0
+  synthetic_params: [0.03, 21.0018, 1.444, 0.2]
+  seed: 2
+#  training_params: [[0.3, 0.05], [0.0225, 0.5]]
+run_output: "/home/fzr5082/pkdan_data_structures/runs/run"
+param_dict: {"n": 0, "p": 1, "q": 2, "x": 3}
+mlp:
+  in_channels: 81
+  value_size: 2
+  key_size: 8
+  attributes: 8
